@@ -12,6 +12,13 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function isAdmin(){
+        return $this->role_id == Role::IS_ADMIN;
+    }
+    public function isUser(){
+        return $this->role_id == Role::IS_USER;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +27,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role_id',
         'password',
     ];
 
@@ -42,6 +50,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
     public function projects(){
         return $this->hasMany(Project::class);
     }
