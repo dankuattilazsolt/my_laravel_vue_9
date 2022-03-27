@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,15 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->namespace('App\Http\Controllers')->group(function (){
+    /**
+     * projects
+     */
+    Route::resource('projects', 'ProjectController')->except('create', 'edit');
+    Route::get('fetch/projects', 'ProjectController@fetch');
+    Route::post('setProjectStatus/{project}', 'ProjectController@setProjectStatus');
+
+});
 
 require __DIR__.'/auth.php';

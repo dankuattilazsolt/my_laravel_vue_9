@@ -16,7 +16,9 @@ class ProjectSeeder extends Seeder
     public function run()
     {
         Project::create([
-
+            'user_id' => 1,
+            'name' => 'Default project',
+            'note' => 'This is an example project.',
         ]);
     }
 }
